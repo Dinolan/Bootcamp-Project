@@ -109,7 +109,8 @@ router.delete('/:orderId' , (req,res,next) => {
             });
         })
         .catch(err => {
-            req.status(500).json({
+            req.
+            status(500).json({
                 error: err
             });
         });
