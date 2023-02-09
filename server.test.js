@@ -1,5 +1,5 @@
-const serverRunning = require('./server');
+const TF = require('./server');
 
-test('Server running on correct port', () =>{
-    expect(port)
+test('Server connected', () => {
+    expect(TF).toBe(true);
 })

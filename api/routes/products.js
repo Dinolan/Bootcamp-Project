@@ -21,15 +21,10 @@ router.get('/', (req,res,next) => {
               products: docs.map(doc => {
                   return {
                       name: doc.name,
-                      price: 'R'+ doc.price,
+                      price: 'R '+ doc.price,
                       _id: doc._id
-/*                      request: {
-                          type: 'GET',
-                          url: 'http://localhost:5000/products/' + doc._id
-                      }*/
                   }
               })
-
           };
           res.status(200).json(response);
 
