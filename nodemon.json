@@ -1,5 +1,6 @@
 {
   "env": {
-    "MONGO_ATLAS_PW": "Sairam3"
+    "MONGO_ATLAS_PW": "Sairam3",
+    "JWT_KEY": "myJWTPassword"
   }
 }

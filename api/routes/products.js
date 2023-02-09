@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose').models;
+const mongoose = require('mongoose').default;
+const Product = require('../models/product');
+const checkAuth = require('../authorization/authorization_check')
 
 //
-const Product = require('../models/product');
+
 
 
 
@@ -39,7 +41,7 @@ router.get('/', (req,res,next) => {
       });
 });
 
-router.post('/', (req,res,next) => {
+router.post('/', checkAuth,(req,res,next) => {
 
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
