@@ -1,28 +1,27 @@
+//Imported variables
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose').default;
 const Order = require('../models/order');
 const Product = require('../models/product');
+
+
+////The GET function will access the current vehicles that have been ordered in database
 router.get('/' , (req,res,next) => {
     Order.find()
-        .select('product quantity _id')
+        .select('product quantity _id name model year')
         .populate('product')
         .exec()
-        .then(docs => {
+        .then(vehicles => {
             res.status(200).json({
-                count: docs.length,
-                orders: docs.map(doc => {
+                count: vehicles.length,
+                orders: vehicles.map(eachVehicle => {
                     return {
-                        _id: doc._id,
-                        product: doc.product,
-                        quantity: doc.quantity
-               /*         request: {
-                            type: 'GET',
-                            url: 'http://localhost:5000/orders/' + doc._id
-                        }*/
+                        _id: eachVehicle._id,
+                        product: eachVehicle.product,
+                        quantity: eachVehicle.quantity,
                     }
                 }),
-
             });
         })
         .catch(err => {
@@ -32,14 +31,16 @@ router.get('/' , (req,res,next) => {
         });
 });
 
+//The POST function will act as the order vehicle functionality
 router.post('/' , (req,res,next) => {
 
     Product.findById(req.body.productId)
         .then(product => {
-            if(!product)
-            {
+
+            //Checking if the vehicle exists before ordering
+            if(!product) {
                 return res.status(404).json({
-                    message: 'Product not found'
+                    message: 'Vehicle not found'
                 });
             }
             const order = new Order({
@@ -51,17 +52,14 @@ router.post('/' , (req,res,next) => {
                 .save()
                 .then( result => {
                     console.log(result);
+                    console.log(result.name);
                     res.status(201).json({
-                        message: 'Order stored',
+                        message: 'Congratulations on your purchase!!!',
                         createdOrder: {
                             _id: result._id,
                             product: result.product,
                             quantity: result.quantity
                         }
- /*                       request: {
-                            type: 'GET',
-                            url: 'http://localhost:5000/orders/' + result._id
-                        }*/
                     });
                 })
 
@@ -72,10 +70,9 @@ router.post('/' , (req,res,next) => {
                 error: err
             })
         });
-
-
 });
 
+//The GET function here will access information on a particular vehicle order
 router.get('/:orderId' , (req,res,next) => {
     Order.findById(req.params.orderId)
         .exec()
@@ -88,10 +85,6 @@ router.get('/:orderId' , (req,res,next) => {
             }
             res.status(200).json({
                 order: order,
-            /*    request: {
-                    type: 'GET',
-                    url: 'http://localhost:5000/orders'
-                }*/
             });
         })
         .catch(err => {
@@ -101,12 +94,13 @@ router.get('/:orderId' , (req,res,next) => {
         });
 });
 
+//The DELETE function will remove a particular vehicle order
 router.delete('/:orderId' , (req,res,next) => {
     Order.remove({_id: req.params.orderId})
         .exec()
         .then(result => {
             res.status(200).json({
-                message: 'Order deleted',
+                message: 'Order Has Been Removed',
                 request: {
                     type: 'POST',
                     url: 'http://localhost:5000/orders',

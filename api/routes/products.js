@@ -1,3 +1,4 @@
+//Imported variables
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose').default;
@@ -5,60 +6,65 @@ const Product = require('../models/product');
 const checkAuth = require('../authorization/authorization_check')
 
 
-//
-
-
-
-
-
+//The GET function will access the current vehicles in the database
 router.get('/', (req,res,next) => {
   Product.find()
-      .select('name price _id')
+      .select('name price _id year model')
       .exec()
-      .then(docs =>{
+      .then(vehicles =>{
           const response = {
-              count: docs.length,
-              products: docs.map(doc => {
+              count: vehicles.length,
+              products: vehicles.map(eachVehicle => {
                   return {
-                      name: doc.name,
-                      price: 'R '+ doc.price,
-                      _id: doc._id
+                      name: eachVehicle.name,
+                      model: eachVehicle.model,
+                      year: eachVehicle.year,
+                      price: 'R '+ eachVehicle.price,
+                      _id: eachVehicle._id
                   }
               })
           };
+          //Returns a successful response
           res.status(200).json(response);
-
-
       })
       .catch(err => {
           console.log(err);
           res.status(500).json({
+              //Returns that there has been an error
               error:err
           });
       });
 });
 
+//The POST function handles adding new vehicles to the inventory
+//Note: There is authentication used for this one via JWT
+//This check happens before the product is created
 router.post('/', checkAuth,(req,res,next) => {
 
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        year: req.body.year,
+        model:req.body.model
     });
     product
         .save()
         .then(result => {
         console.log(result);
             res.status(201).json({
-                message: 'Handling POST requests to /products',
+                message: 'New Vehicle Added To Inventory',
                 createdProduct: {
                     name: result.name,
-                    price: result.price,
+                    model: result.model,
+                    year: result.year,
+                    price: 'R '+result.price,
                     _id: result._id
                 }
             });
     }).catch(err => {
         console.log(err);
+        //Returns that there has been an error
         res.status(500).json({
             error:err
         })
@@ -67,6 +73,7 @@ router.post('/', checkAuth,(req,res,next) => {
 
 });
 
+//The GET function can access a single vehicle from the database using the ID
 router.get('/:productId', (req,res,next) => {
     const id = req.params.productId;
 
@@ -84,29 +91,27 @@ router.get('/:productId', (req,res,next) => {
                     message: 'No valid entry found for provided ID'
                 });
             }
-
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({error:err});
         });
-
-
 });
 
+//The PATCH function allows for updating a property of an existing vehicle
 router.patch('/:productId', (req,res,next) => {
     const id = req.params.productId;
-    const updateOps = {};
+    const updateVehicle= {};
 
-    for(const ops of req.body) {
-        updateOps[ops.propName] = ops.value;
+    for(const property of req.body) {
+        updateVehicle[property.updateVehicle] = property.value;
     }
-    Product.update({_id: id }, {$set: updateOps })
+    Product.update({_id: id }, {$set: updateVehicle })
         .exec()
         .then(result => {
             console.log(result);
             res.status(200).json({
-                message: 'Car List Updated',
+                message: 'Vehicle List Has Been Updated',
                 result
             });
         })
@@ -118,12 +123,16 @@ router.patch('/:productId', (req,res,next) => {
         });
 });
 
+
+//The DELETE function will access a vehicle and remove it from the inventory
 router.delete('/:productId', (req,res,next) => {
     const id = req.params.productId;
     Product.remove({_id: id})
         .exec()
         .then( result => {
-            res.status(200).json(result);
+            res.status(200).json({
+                message: 'Vehicle Has Been Removed From Inventory'
+            });
         })
         .catch(err => {
             console.log(err);
@@ -133,19 +142,22 @@ router.delete('/:productId', (req,res,next) => {
         });
 });
 
+
+//The PUT function is for changing the entire vehicle entry
+//Coded very similar to the PATCH function
 router.put('/:productId', (req,res,next) => {
     const id = req.params.productId;
-    const updateOps = {};
+    const updateVehicle= {};
 
-    for(const ops of req.body) {
-        updateOps[ops.propName] = ops.value;
+    for(const property of req.body) {
+        updateVehicle[property.updateVehicle] = property.value;
     }
-    Product.update({_id: id }, {$set: updateOps })
+    Product.update({_id: id }, {$set: updateVehicle })
         .exec()
         .then(result => {
             console.log(result);
             res.status(200).json({
-                message: 'Car List Updated',
+                message: 'Vehicle List Has Been Updated',
                 result
             });
         })
@@ -156,7 +168,5 @@ router.put('/:productId', (req,res,next) => {
             });
         });
 });
-
-
 
 module.exports = router;
