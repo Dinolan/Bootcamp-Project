@@ -7,8 +7,7 @@ const mongoose = require('mongoose').default;
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
-
-
+const userRoutes = require('./api/routes/user');
 
 
 const url = `mongodb+srv://dinolan:${process.env.MONGO_ATLAS_PW}@bootcamp-node-js.ve5du3p.mongodb.net/?retryWrites=true&w=majority`
@@ -41,6 +40,7 @@ app.use('/products' , productRoutes);
 
 //Anything with /orders will be forwarded to the orders.js file
 app.use('/orders' , orderRoutes);
+app.use('/user', userRoutes);
 
 //Error handling
 app.use((req,res,next) => {
