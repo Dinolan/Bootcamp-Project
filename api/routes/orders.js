@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose').default;
 const Order = require('../models/order');
 const Product = require('../models/product');
+const logger = require('../../logger/logger');
 
 
 ////The GET function will access the current vehicles that have been ordered in database
@@ -21,13 +22,15 @@ router.get('/' , (req,res,next) => {
                         product: eachVehicle.product,
                         quantity: eachVehicle.quantity,
                     }
-                }),
+                })
             });
+            logger.customerLogger.log('info','Order list displayed successfully');
         })
         .catch(err => {
             res.status(500).json({
                 error: err
             });
+            logger.customerLogger.log('error','Order list could not be displayed');
         });
 });
 
@@ -42,6 +45,7 @@ router.post('/' , (req,res,next) => {
                 return res.status(404).json({
                     message: 'Vehicle not found'
                 });
+                logger.customerLogger.log('error','Order not placed. Vehicle does not exist');
             }
             const order = new Order({
                 _id: mongoose.Types.ObjectId(),
@@ -61,6 +65,7 @@ router.post('/' , (req,res,next) => {
                             quantity: result.quantity
                         }
                     });
+                    logger.customerLogger.log('info','Order placed successfully');
                 })
 
         })
@@ -68,7 +73,8 @@ router.post('/' , (req,res,next) => {
             console.log(err);
             res.status(500).json({
                 error: err
-            })
+            });
+            logger.customerLogger.log('error','Order could not be placed');
         });
 });
 
@@ -82,15 +88,19 @@ router.get('/:orderId' , (req,res,next) => {
                 return res.status(404).json({
                     message: 'Order not found'
                 });
+                logger.customerLogger.log('error','Vehicle not found');
+
             }
             res.status(200).json({
                 order: order,
             });
+            logger.customerLogger.log('info','Vehicle information displayed succesfully');
         })
         .catch(err => {
             req.status(500).json({
                 error: err
             });
+            logger.customerLogger.log('error','Vehicle could not be found');
         });
 });
 
@@ -107,12 +117,14 @@ router.delete('/:orderId' , (req,res,next) => {
                     body: {productId : 'ID', quantity: 'Number'}
                 }
             });
+            logger.customerLogger.log('info','Order has been removed successfully');
         })
         .catch(err => {
             req.
             status(500).json({
                 error: err
             });
+            logger.customerLogger.log('error','Order could not be removed');
         });
 });
 

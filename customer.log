@@ -18,3 +18,12 @@
 {"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T08:09:32.757Z"}
 {"level":"info","message":"Vehicle information has been updated successfully","timestamp":"2023-02-13T08:11:05.120Z"}
 {"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T08:12:22.422Z"}
+{"level":"info","message":"Order placed successfully","timestamp":"2023-02-13T08:18:12.663Z"}
+{"level":"info","message":"Order list displayed successfully","timestamp":"2023-02-13T08:18:18.602Z"}
+{"level":"error","message":"Order could not be placed","timestamp":"2023-02-13T08:18:26.839Z"}
+{"level":"error","message":"Order could not be placed","timestamp":"2023-02-13T08:18:44.998Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T08:18:58.360Z"}
+{"level":"info","message":"Order placed successfully","timestamp":"2023-02-13T08:19:07.544Z"}
+{"level":"info","message":"Order list displayed successfully","timestamp":"2023-02-13T08:19:13.861Z"}
+{"level":"info","message":"Order has been removed successfully","timestamp":"2023-02-13T08:22:16.729Z"}
+{"level":"info","message":"Order list displayed successfully","timestamp":"2023-02-13T08:22:28.152Z"}
