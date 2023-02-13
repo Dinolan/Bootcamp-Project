@@ -5,6 +5,10 @@ const mongoose = require('mongoose').default;
 const Product = require('../models/product');
 const checkAuth = require('../authorization/authorization_check')
 const logger = require('../../logger/logger');
+const axios = require('axios');
+
+
+
 
 //The GET function will access the current vehicles in the database
 router.get('/', (req,res,next) => {
@@ -27,6 +31,7 @@ router.get('/', (req,res,next) => {
           //Returns a successful response
           logger.customerLogger.log('info','Vehicle list displayed successfully');
           res.status(200).json(response);
+
       })
       .catch(err => {
           console.log(err);
@@ -38,6 +43,9 @@ router.get('/', (req,res,next) => {
           logger.customerLogger.log('error','Vehicle list could not be displayed');
       });
 });
+
+
+
 
 //The POST function handles adding new vehicles to the inventory
 //Note: There is authentication used for this one via JWT

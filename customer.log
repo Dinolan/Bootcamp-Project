@@ -33,3 +33,16 @@
 {"level":"error","message":"Log-In Authentication failed","timestamp":"2023-02-13T08:33:19.513Z"}
 {"level":"info","message":"Log-In Authentication Successful","timestamp":"2023-02-13T08:34:08.398Z"}
 {"level":"info","message":"User has been deleted","timestamp":"2023-02-13T08:40:16.349Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T09:13:35.251Z"}
+{"level":"info","message":"Vehicle information successfully displayed","timestamp":"2023-02-13T09:28:14.158Z"}
+{"level":"error","message":"Vehicle information could not be displayed","timestamp":"2023-02-13T09:31:41.577Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T09:32:19.661Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T09:32:53.808Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T10:05:17.372Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T10:05:38.805Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T10:08:12.128Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T10:08:18.923Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T10:09:17.399Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T10:09:18.417Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T10:54:08.900Z"}
+{"level":"info","message":"Vehicle list displayed successfully","timestamp":"2023-02-13T10:54:19.919Z"}

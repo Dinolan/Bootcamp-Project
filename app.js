@@ -4,11 +4,13 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose').default;
+const axios = require("axios");
 
 //Route variables
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/user');
+
 
 
 //Connecting to MongoDB
@@ -43,6 +45,10 @@ app.use('/orders' , orderRoutes);
 app.use('/user', userRoutes);
 
 
+/*axios.get('https://localhost:5000/products')
+    .then(response => {
+        console.log(response);
+    });*/
 
 
 //Error handling for the routes
