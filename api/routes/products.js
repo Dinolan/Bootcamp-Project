@@ -4,7 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose').default;
 const Product = require('../models/product');
 const checkAuth = require('../authorization/authorization_check')
-
+const logger = require('../../logger/logger');
 
 //The GET function will access the current vehicles in the database
 router.get('/', (req,res,next) => {
@@ -25,6 +25,7 @@ router.get('/', (req,res,next) => {
               })
           };
           //Returns a successful response
+          logger.customerLogger.log('info','Vehicle list displayed successfully');
           res.status(200).json(response);
       })
       .catch(err => {
@@ -32,7 +33,9 @@ router.get('/', (req,res,next) => {
           res.status(500).json({
               //Returns that there has been an error
               error:err
+
           });
+          logger.customerLogger.log('error','Vehicle list could not be displayed');
       });
 });
 
@@ -52,6 +55,7 @@ router.post('/', checkAuth,(req,res,next) => {
         .save()
         .then(result => {
         console.log(result);
+            logger.customerLogger.log('info','New vehicle successfully added to inventory ');
             res.status(201).json({
                 message: 'New Vehicle Added To Inventory',
                 createdProduct: {
@@ -67,7 +71,8 @@ router.post('/', checkAuth,(req,res,next) => {
         //Returns that there has been an error
         res.status(500).json({
             error:err
-        })
+        });
+        logger.customerLogger.log('error','Cannot add new vehicle to inventory');
     });
 
 
@@ -84,17 +89,20 @@ router.get('/:productId', (req,res,next) => {
             if(doc)
             {
                 res.status(200).json(doc);
+                logger.customerLogger.log('info','Vehicle information successfully displayed');
             }
             else
             {
                 res.status(404).json({
                     message: 'No valid entry found for provided ID'
                 });
+                logger.customerLogger.log('error','Vehicle information could not be displayed');
             }
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({error:err});
+            logger.customerLogger.log('error','Vehicle information could not be displayed');
         });
 });
 
@@ -114,12 +122,14 @@ router.patch('/:productId', (req,res,next) => {
                 message: 'Vehicle List Has Been Updated',
                 result
             });
+            logger.customerLogger.log('info','Vehicle information has been updated successfully');
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({
                 error: err
             });
+            logger.customerLogger.log('error','Vehicle information could not be updated');
         });
 });
 
@@ -127,19 +137,33 @@ router.patch('/:productId', (req,res,next) => {
 //The DELETE function will access a vehicle and remove it from the inventory
 router.delete('/:productId', (req,res,next) => {
     const id = req.params.productId;
-    Product.remove({_id: id})
+    Product.findById(id)
         .exec()
-        .then( result => {
-            res.status(200).json({
-                message: 'Vehicle Has Been Removed From Inventory'
-            });
-        })
+        .then(
+            Product.remove({_id: id})
+            .exec()
+            .then( result => {
+                res.status(200).json({
+                    message: 'Vehicle Has Been Removed From Inventory'
+                });
+                logger.customerLogger.log('info','Vehicle has been successfully removed from inventory');
+
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    error: err
+                });
+                logger.customerLogger.log('error','Vehicle could not be removed from inventory');
+            })
+        )
         .catch(err => {
             console.log(err);
             res.status(500).json({
                 error: err
             });
-        });
+            logger.customerLogger.log('error','Vehicle could not be removed from inventory');
+        })
 });
 
 
@@ -160,12 +184,14 @@ router.put('/:productId', (req,res,next) => {
                 message: 'Vehicle List Has Been Updated',
                 result
             });
+            logger.customerLogger.log('info','Vehicle information has been updated successfully');
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({
                 error: err
             });
+            logger.customerLogger.log('error','Vehicle information could not be updated');
         });
 });
 
