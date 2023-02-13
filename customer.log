@@ -27,3 +27,9 @@
 {"level":"info","message":"Order list displayed successfully","timestamp":"2023-02-13T08:19:13.861Z"}
 {"level":"info","message":"Order has been removed successfully","timestamp":"2023-02-13T08:22:16.729Z"}
 {"level":"info","message":"Order list displayed successfully","timestamp":"2023-02-13T08:22:28.152Z"}
+{"level":"error","message":"Signup Error: User email already exists","timestamp":"2023-02-13T08:30:47.764Z"}
+{"level":"error","message":"Signup Error: User email already exists","timestamp":"2023-02-13T08:32:47.690Z"}
+{"level":"info","message":"User signed up successfully","timestamp":"2023-02-13T08:32:57.617Z"}
+{"level":"error","message":"Log-In Authentication failed","timestamp":"2023-02-13T08:33:19.513Z"}
+{"level":"info","message":"Log-In Authentication Successful","timestamp":"2023-02-13T08:34:08.398Z"}
+{"level":"info","message":"User has been deleted","timestamp":"2023-02-13T08:40:16.349Z"}

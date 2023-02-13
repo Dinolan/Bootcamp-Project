@@ -1,3 +1,6 @@
 {"level":"error","message":"Vehicle information could not be displayed","timestamp":"2023-02-13T07:49:36.809Z"}
 {"level":"error","message":"Order could not be placed","timestamp":"2023-02-13T08:18:26.840Z"}
 {"level":"error","message":"Order could not be placed","timestamp":"2023-02-13T08:18:44.998Z"}
+{"level":"error","message":"Signup Error: User email already exists","timestamp":"2023-02-13T08:30:47.765Z"}
+{"level":"error","message":"Signup Error: User email already exists","timestamp":"2023-02-13T08:32:47.692Z"}
+{"level":"error","message":"Log-In Authentication failed","timestamp":"2023-02-13T08:33:19.513Z"}
