@@ -44,6 +44,23 @@ router.get('/', (req,res,next) => {
       });
 });
 
+//Test
+async function vehicleYear(vehicleID)
+{
+    try{
+        const result = await fetch(
+            `https://localhost:5000/products/${vehicleID}`
+        );
+
+        const data = await result.json("year");
+        return data;
+    } catch(e){
+        return null
+    }
+}
+
+
+
 
 
 
@@ -204,3 +221,4 @@ router.put('/:productId', (req,res,next) => {
 });
 
 module.exports = router;
+module.exports = vehicleYear;
